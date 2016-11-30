@@ -87,7 +87,7 @@ func (c *Connection) Databases() ([]string, error) {
 }
 
 func (c *Connection) databaseRegExs() ([]bson.RegEx, error) {
-	var dbnames [1]string
+	var dbnames [1]
 	dbnames[0] = bson.RegEx{Pattern: "chameleon-staging.*"}
 
 	return dbnames, nil
