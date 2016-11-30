@@ -80,15 +80,15 @@ func NewConnection(config Config) (*Connection, error) {
 }
 
 func (c *Connection) Databases() ([]string, error) {
-	var dbnames [1]string
-	dbnames[0] = "chameleon-staging"
+	var dbnames []string
+	dbnames = append(dbnames, "chameleon-staging")
 
 	return dbnames, nil
 }
 
 func (c *Connection) databaseRegExs() ([]bson.RegEx, error) {
-	var dbnames [1]bson.RegEx
-	dbnames[0] = bson.RegEx{Pattern: "chameleon-staging.*"}
+	var dbnames []bson.RegEx
+	dbnames = append(dbnames, bson.RegEx{Pattern: "chameleon-staging.*"})
 
 	return dbnames, nil
 }
