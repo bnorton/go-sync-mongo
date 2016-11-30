@@ -80,36 +80,17 @@ func NewConnection(config Config) (*Connection, error) {
 }
 
 func (c *Connection) Databases() ([]string, error) {
-	dbnames, err := c.Session.DatabaseNames()
-	if err != nil {
-		return nil, err
-	}
+	var dbnames [1]string
+	dbnames[0] = "chameleon-staging"
 
-	var slice []string
-
-	for _, dbname := range dbnames {
-		if dbname != "local" && dbname != "admin" {
-			slice = append(slice, dbname)
-		}
-	}
-	return slice, nil
+	return dbnames, nil
 }
 
 func (c *Connection) databaseRegExs() ([]bson.RegEx, error) {
-	dbnames, err := c.Session.DatabaseNames()
+	var dbnames [1]string
+	dbnames[0] = bson.RegEx{Pattern: "chameleon-staging.*"}
 
-	if err != nil {
-		return nil, err
-	}
-
-	var slice []bson.RegEx
-
-	for _, dbname := range dbnames {
-		if dbname != "local" && dbname != "admin" {
-			slice = append(slice, bson.RegEx{Pattern: dbname + ".*"})
-		}
-	}
-	return slice, nil
+	return dbnames, nil
 }
 
 func (c *Connection) Push(oplog bson.M) {
