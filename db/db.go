@@ -79,13 +79,6 @@ func NewConnection(config Config) (*Connection, error) {
 	return c, nil
 }
 
-func (c *Connection) Databases() ([]string, error) {
-	var dbnames []string
-	dbnames = append(dbnames, "chameleon-staging")
-
-	return dbnames, nil
-}
-
 func (c *Connection) databaseRegExs() ([]bson.RegEx, error) {
 	var dbnames []bson.RegEx
 	dbnames = append(dbnames, bson.RegEx{Pattern: "chameleon-staging.*"})
@@ -101,6 +94,7 @@ func (c *Connection) Push(oplog bson.M) {
 }
 
 func (c *Connection) SyncOplog(dst *Connection) error {
+	fmt.Println("SyncOplog start")
 	var (
 		restore_query bson.M
 		tail_query    bson.M
