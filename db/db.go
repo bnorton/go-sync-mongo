@@ -97,6 +97,7 @@ func (c *Connection) Databases() ([]string, error) {
 
 func (c *Connection) databaseRegExs() ([]bson.RegEx, error) {
 	dbnames, err := c.Session.DatabaseNames()
+
 	if err != nil {
 		return nil, err
 	}
@@ -150,13 +151,10 @@ func (c *Connection) SyncOplog(dst *Connection) error {
 		restore_query["ts"] = bson.M{"$gt": bson.MongoTimestamp(sec<<32 + ord)}
 	}
 
-	dbnames, _ := c.databaseRegExs()
-	if len(dbnames) > 0 {
-		restore_query["ns"] = bson.M{"$in": dbnames}
-		tail_query["ns"] = bson.M{"$in": dbnames}
-	} else {
-		return fmt.Errorf("No databases found")
-	}
+	var dbnames [1]string
+	a[0] = "chameleon-staging"
+	restore_query["ns"] = bson.M{"$in": dbnames}
+	tail_query["ns"] = bson.M{"$in": dbnames}
 
 	applyOpsResponse := ApplyOpsResponse{}
 	opCount := 0

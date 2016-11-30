@@ -14,8 +14,10 @@
 
 package main
 
-import "github.com/checkr/go-sync-mongo/cmd"
+import "github.com/bnorton/go-sync-mongo/cmd"
+import "fmt"
 
 func main() {
+  fmt.Println("Starting main")
 	cmd.Execute()
 }
