@@ -152,7 +152,7 @@ func (c *Connection) SyncOplog(dst *Connection) error {
 	}
 
 	var dbnames [1]string
-	a[0] = "chameleon-staging"
+	dbnames[0] = "chameleon-staging"
 	restore_query["ns"] = bson.M{"$in": dbnames}
 	tail_query["ns"] = bson.M{"$in": dbnames}
 
